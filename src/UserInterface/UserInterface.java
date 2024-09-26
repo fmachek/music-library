@@ -2,7 +2,6 @@ package UserInterface;
 
 import MusicClasses.Album;
 import MusicClasses.Song;
-import MusicClasses.SongList;
 import UserInterface.Panels.*;
 import UserInterface.Panels.Albums.AlbumSectionPanel;
 import UserInterface.Panels.SongLists.SongListContainer;
@@ -12,11 +11,8 @@ import UserInterface.Player.ControlLabels.PlayButton;
 import UserInterface.Player.Sliders.PlaybackSlider;
 import UtilityClasses.FileLoader;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,7 +23,7 @@ import java.util.HashMap;
 public class UserInterface {
     private static UserInterface instance;
     private static boolean loaded = false;
-    private JFrame window;
+    private MainAppWindow window;
     private JPanel mainPanel;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -36,7 +32,6 @@ public class UserInterface {
     private SectionContainerPanel sectionPanel;
     private CustomVerticalScrollPane sectionScrollPane;
     private ArrayList<SectionPanel> sections = new ArrayList<>();
-    private PlayButton playButton;
     private SongListContainer songListContainer;
     private CustomVerticalScrollPane songListScrollPane;
     private HashMap<String, SongListPanel> albumPanels = new HashMap<>();
@@ -70,7 +65,6 @@ public class UserInterface {
      */
     private void loadInterface() {
         if (!loaded) {
-            // UIManager.put( "ScrollBar.maximumThumbSize", new Dimension(15, 100));
             UIManager.put("ScrollBar.width", 15);
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -93,6 +87,7 @@ public class UserInterface {
             loadLeftPanel();
             loadRightPanel();
             window.setVisible(true);
+            window.loadKeybindings(playbackPanel);
         }
         loaded = true;
     }
@@ -101,21 +96,7 @@ public class UserInterface {
      * Loads the main application window (JFrame).
      */
     private void loadWindow() {
-        JFrame window = new JFrame("MusicLibrary");
-        window.setResizable(false);
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.getContentPane().setLayout(null);
-
-        try {
-            ImageIcon icon = FileLoader.loadImageFromFile("res\\icons\\disc.png");
-            window.setIconImage(icon.getImage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Dimension windowSize = new Dimension(800,600);
-        window.getContentPane().setPreferredSize(windowSize);
-        window.pack();
+        MainAppWindow window = new MainAppWindow(new Dimension(800,600));
         this.window = window;
     }
 

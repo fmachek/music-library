@@ -28,7 +28,7 @@ public class BackwardButton extends ControlLabel {
      * If there is a song in the history, it is played. If not, the current song is played again.
      */
     @Override
-    protected void clickAction() {
+    public void clickAction() {
         Song prevSong = Library.getInstance().getPreviousSong();
         try {
             SoundPlayer player = SoundPlayer.getInstance();

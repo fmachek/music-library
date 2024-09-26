@@ -22,7 +22,7 @@ public class PlayButton extends ControlLabel {
      * If a song wasn't selected, the user is prompted to do so.
      */
     @Override
-    protected void clickAction() {
+    public void clickAction() {
         try {
             SoundPlayer player = SoundPlayer.getInstance();
             if(player.getCurrentSong() != null) {

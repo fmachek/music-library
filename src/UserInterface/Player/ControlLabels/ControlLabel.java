@@ -81,7 +81,7 @@ public abstract class ControlLabel extends JLabel {
     /**
      * Does something when the label is clicked on.
      */
-    protected abstract void clickAction();
+    public abstract void clickAction();
 
     /**
      * Does something when the mouse enters the label.

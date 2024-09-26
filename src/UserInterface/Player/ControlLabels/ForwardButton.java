@@ -28,7 +28,7 @@ public class ForwardButton extends ControlLabel {
      * Plays the next song in the history.
      */
     @Override
-    protected void clickAction() {
+    public void clickAction() {
         Song nextSong = Library.getInstance().getNextSong();
         try {
             SoundPlayer player = SoundPlayer.getInstance();

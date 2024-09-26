@@ -170,4 +170,16 @@ public class PlaybackControlPanel extends JPanel {
             e.printStackTrace();
         }
     }
+
+    public void activateForwardButton() {
+        forwardButton.clickAction();
+    }
+
+    public void activateBackwardButton() {
+        backwardButton.clickAction();
+    }
+
+    public void activatePlayButton() {
+        playButton.clickAction();
+    }
 }
