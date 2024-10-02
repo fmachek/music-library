@@ -204,4 +204,18 @@ public class FileLoader {
         Serializer<Library> ser = new Serializer<>();
         return ser.deserializeObject(filePath);
     }
+
+    /**
+     * Removes a file at a given file path.
+     * @param filePath path to the file
+     */
+    public static void removeFile(String filePath) {
+        File file = new File(filePath);
+
+        if (file.delete()) {
+            System.out.println("File at '" + filePath + "' deleted successfully.");
+        } else {
+            System.out.println("Failed to delete file at '" + filePath + "'.");
+        }
+    }
 }

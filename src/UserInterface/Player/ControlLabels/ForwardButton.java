@@ -12,7 +12,7 @@ import java.awt.*;
 public class ForwardButton extends ControlLabel {
 
     public ForwardButton() {
-        super(new Dimension(18,24));
+        super(new Dimension(18,18));
     }
 
     @Override

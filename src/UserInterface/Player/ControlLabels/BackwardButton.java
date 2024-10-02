@@ -12,7 +12,7 @@ import java.awt.*;
 public class BackwardButton extends ControlLabel {
 
     public BackwardButton() {
-        super(new Dimension(18,24));
+        super(new Dimension(18,18));
     }
 
     @Override

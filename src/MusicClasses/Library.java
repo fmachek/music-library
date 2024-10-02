@@ -5,6 +5,7 @@ import UtilityClasses.FileLoader;
 import UtilityClasses.SoundPlayer;
 
 import javax.sound.sampled.AudioInputStream;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,7 +19,6 @@ public class Library implements Serializable {
     private static Library instance;
     private SongList allSongs = new SongList("All Songs");
     private ArrayList<Album> albums = new ArrayList<>();
-    private HashSet<SongList> songLists = new HashSet<>();
     private LinkedList<Song> songQueue = new LinkedList<>();
     private LinkedList<Song> songHistory = new LinkedList<>();
     private int currentHistoryIndex;
@@ -42,6 +42,37 @@ public class Library implements Serializable {
         }
         for(Song song : badSongs) {
             allSongs.getSongs().remove(song);
+        }
+    }
+
+    /**
+     * Finds which song files in the 'res' folder are not being used anymore and deletes them.
+     */
+    private void removeRedundantFiles() {
+        File directory = new File("res\\songs");
+
+        ArrayList<String> usedFilePaths = new ArrayList<>();
+
+        for (Song song : allSongs.getSongs()) {
+            usedFilePaths.add(song.getFilePath());
+        }
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] filesList = directory.listFiles();
+
+            if (filesList != null) {
+                for (File file : filesList) {
+                    if (file.isFile()) {
+                        String filePath = file.getPath();
+                        if(!usedFilePaths.contains(filePath)) {
+                            FileLoader.removeFile(filePath);
+                            System.out.println("File at '" + filePath + "' was removed, because it was not being used anymore.");
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("The specified path is not a valid directory.");
         }
     }
 
@@ -74,6 +105,7 @@ public class Library implements Serializable {
             if(loadedLibrary != null) {
                 loadedLibrary.legitimizeSongs();
                 loadedLibrary.legitimizeAlbums();
+                loadedLibrary.removeRedundantFiles();
                 instance = loadedLibrary;
             } else {
                 instance = new Library();
@@ -125,6 +157,7 @@ public class Library implements Serializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        FileLoader.removeFile(song.getFilePath());
         System.out.println("Song called " + song.getTitle() + " by " + song.getArtist() + " was removed.");
     }
 
